@@ -59,7 +59,8 @@ lock.unlock_old(10)
 ## Limitation
 
 * Lock might remain by network failure or other reason. See `#unlock_old`.
-*
+* Number of domains are limited by SimpleDB.
+* Each Lock is represented by an item in SimpleDB. Number of items are limited by SimpleDB.
 
 ## Contributing
 
