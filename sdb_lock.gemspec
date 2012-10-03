@@ -4,8 +4,8 @@ require File.expand_path('../lib/sdb_lock/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["KAWACHI Takashi"]
   gem.email         = ["kawachi@p-lucky.net"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Lock library using Amazon SimpleDB}
+  gem.summary       = %q{Lock library using Amazon SimpleDB}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
@@ -14,4 +14,8 @@ Gem::Specification.new do |gem|
   gem.name          = "sdb_lock"
   gem.require_paths = ["lib"]
   gem.version       = SdbLock::VERSION
+
+  gem.add_dependency 'aws-sdk', '~> 1.5.7'
+
+  gem.add_development_dependency 'rake', '~> 0.9.2.2'
 end
