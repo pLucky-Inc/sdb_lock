@@ -40,7 +40,9 @@ locked = lock.try_lock("a1") do
   # do some work
 end
 
-# if you want to block until gain lock, then
+# if you want to block until gain lock, then use #lock
+# WARN There is no way to wake up others. It is slow with high contention
+#   because it does polling internally.
 lock.lock("a1") do
   # do some work
 end

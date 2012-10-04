@@ -27,6 +27,9 @@ class SdbLock
   # Attribute name to be used to save locked time
   LOCK_TIME = 'lock_time'
 
+  # Max wait secs for #lock
+  MAX_WAIT_SECS = 2
+
   # Constructor
   #
   # @param [String] domain_name SimpleDB domain name
@@ -69,7 +72,7 @@ class SdbLock
     while true
       lock = try_lock(resource_name)
       break if lock
-      sleep(wait_secs)
+      sleep([wait_secs, MAX_WAIT_SECS].min)
       wait_secs *= 2
     end
 
