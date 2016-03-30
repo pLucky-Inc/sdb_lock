@@ -45,14 +45,15 @@ class SdbLock
   # Try to lock resource_name
   #
   # @param [String] resource_name name to lock
+  # @param [Array] additional_attributes include additional attributes
   # @return [TrueClass] true when locked, unless false
-  def try_lock(resource_name)
+  def try_lock(resource_name, additional_attributes = [])
     attributes = [
       {
         name: LOCK_TIME,
         value: format_time(Time.now)
       }
-    ]
+    ].concat(additional_attributes)
 
     @sdb.put_attributes(
       domain_name: @domain_name,
@@ -79,10 +80,11 @@ class SdbLock
   # It blocks until lock is succeeded.
   #
   # @param [String] resource_name
-  def lock(resource_name)
+  # @param [Array] additional_attributes include additional attributes
+  def lock(resource_name, additional_attributes = [])
     wait_secs = 0.5
     while true
-      lock = try_lock(resource_name)
+      lock = try_lock(resource_name, additional_attributes)
       break if lock
       sleep([wait_secs, MAX_WAIT_SECS].min)
       wait_secs *= 2

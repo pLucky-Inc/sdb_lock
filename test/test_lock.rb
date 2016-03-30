@@ -36,4 +36,25 @@ class LockTest < MiniTest::Test
     threads.each { |thread| thread.join }
     assert_equal(10, shared_var)
   end
+
+  def test_additional_attributes
+    additional_attributes = [
+      {
+        name: 'additional_attribute',
+        value: 'test'
+      }
+    ]
+
+    # Additional attributes were set
+    @lock.lock("test", additional_attributes)
+    attributes = @lock.send(:item, "test")
+    attributes.each do |a|
+      assert_equal('test', a.value) if a.name == 'additional_attribute'
+    end
+
+    # Additional attributes were unset
+    @lock.unlock("test")
+    attributes = @lock.send(:item, "test")
+    assert_equal([], attributes)
+  end
 end
