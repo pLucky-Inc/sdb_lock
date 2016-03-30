@@ -45,16 +45,23 @@ class LockTest < MiniTest::Test
       }
     ]
 
-    # Additional attributes were set
     @lock.lock("test", additional_attributes)
+    # Checking the values of an attribute are not always immediately available,
+    # so sleep for a second.
+    sleep(1)
     attributes = @lock.send(:item, "test")
-    attributes.each do |a|
-      assert_equal('test', a.value) if a.name == 'additional_attribute'
+    value = attributes.each do |a|
+      break a.value if a.name == 'additional_attribute'
     end
+    # Additional attributes were set
+    assert_equal('test', value)
 
-    # Additional attributes were unset
     @lock.unlock("test")
+    # Checking the values of an attribute are not always immediately available,
+    # so sleep for a second.
+    sleep(1)
     attributes = @lock.send(:item, "test")
+    # Additional attributes were unset
     assert_equal([], attributes)
   end
 end
