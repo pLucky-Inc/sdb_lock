@@ -1,13 +1,10 @@
-require 'minitest/unit'
 require 'minitest/autorun'
 require "sdb_lock"
 
-class LockTest < MiniTest::Unit::TestCase
+class LockTest < MiniTest::Test
   def setup
     @lock = SdbLock.new(
-        'lock_test',
-        create_domain: true,
-        simple_db_endpoint: "sdb.ap-northeast-1.amazonaws.com"
+        'lock_test'
     )
     @lock.unlock("test")
   end
