@@ -58,6 +58,14 @@ lock.unlock_old(10)
 
 ````
 
+## Test
+
+`AWS_REGION` environmental variable is required to run tests.
+
+```
+$ AWS_REGION=ap-northeast-1 bundle exec rake
+```
+
 ## Limitation
 
 * Lock might remain by network failure or other reason. See `#unlock_old`.
